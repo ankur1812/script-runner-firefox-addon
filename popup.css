@@ -6,8 +6,6 @@ html {
 }
 #title {font-size: 1.2rem; font-weight: bold;}
 #url-div {float: right}
-.float-right {float: right}
-.flex {display: flex}
 
 label {font-size: 1.1rem;}
 textarea {
@@ -19,16 +17,10 @@ textarea {
 }
 button {
   padding: 2px 4px;
+  width: 100%;
   margin: 2px;
   background: white;
   border-radius: 0px;
   cursor: pointer;
   box-shadow: none;
-}
-
-.w-100 {width: 100%;}
-.w-50 {width: 50%;}
-
-.active {
-  border-bottom: 3px;
 }

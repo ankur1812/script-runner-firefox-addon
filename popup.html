@@ -5,39 +5,14 @@
   </head>
   <body>
     <div id="url-div"></div>
-    <div id="title">Script Runner</div>
+    <div id="title">Inject</div>
     <hr/>
-    <!-- <a id="global-action" class="float-rightw">Configure Global Scripts</a> -->
-    <div class="flex view-btns">
-      <button id="show-local" class="w-50">Scripts for this site</button>
-      <button id="show-global" class="w-50">Global scripts</button>
-
-    </div>
-    <!-- <input type="checkbox">Global Scripts<br> -->
-    <!-- <input type="checkbox">Site Scripts<br> -->
-
-    <div id="local-scripts">
-      <input type="checkbox" checked="true" id="enable-css">
-      <label>CSS</label><br>
-      <textarea id="css-box" placeholder="Add CSS styles here" cols="40" rows="6"></textarea>
-      <br>
-      <input type="checkbox" checked="true" id="enable-js">
-      <label>JavaScript</label><br>
-      <textarea id="js-box" placeholder="Add JS here" cols="40" rows="6"></textarea>
-    </div>
-
-    <div id="global-scripts" style="display:none">
-      <input type="checkbox" checked="true" id="enable-css-global">
-      <label>Global CSS</label><br>
-      <textarea id="css-box-global" placeholder="Add Global CSS styles here" cols="40" rows="6"></textarea>
-      <br>
-      <input type="checkbox" checked="true" id="enable-js-global">
-      <label>Global JavaScript</label><br>
-      <textarea id="js-box-global" placeholder="Add Global JS here" cols="40" rows="6"></textarea>
-    </div>
+    <label>CSS</label><br>
+    <textarea id="css-box" placeholder="Add CSS styles here" cols="40" rows="6"></textarea>
+    <br><label>JavaScript</label><br>
+    <textarea id="js-box" placeholder="Add JS here" cols="40" rows="6"></textarea>
     <div id="success-msg"></div>
-
-    <button id="save-btn" class="w-100">Save</button>
+    <button>Save</button>
   </body>
 </html>
 <script src="popup.js"></script>  

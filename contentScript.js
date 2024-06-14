@@ -12,30 +12,16 @@ let gettingItem = browser.storage.local.get(url);
 gettingItem.then((data) => {
     console.log("FOUND",  JSON.stringify(data));
     let info = data[url]
-    if(info.cssEnabled && info.css) {
+    if(info.css) {
         addCSS(info.css.replaceAll("\"", ""));
     }
-    if(info.jsEnabled && info.js) {
-        try { eval(info.js)}
-        catch (err) {console.log(JSON.stringify(err))}        
+    if(info.js) {
+        try {
+            eval(info.js)
+        }
+        catch (err) {console.log(JSON.stringify(err))}
+        
     }
     
 }, (err)=> console.log('ERR', JSON.stringify(err)));
-
-let gettingItemGlobal = browser.storage.local.get('globalCode');
-gettingItemGlobal.then((data) => {
-    console.log("FOUND",  JSON.stringify(data));
-    let info = data.globalCode;
-    if(info.cssGlobalEnabled && info.cssGlobal) {
-        addCSS(info.cssGlobal.replaceAll("\"", ""));
-    }
-    if(info.jsGlobalEnabled && info.jsGlobal) {
-        try { eval(info.jsGlobal)}
-        catch (err) {console.log(JSON.stringify(err))}        
-    }
-       
-}, (err)=> console.log('ERR', JSON.stringify(err)));
-
-
-
 
