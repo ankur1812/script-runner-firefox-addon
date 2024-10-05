@@ -3,7 +3,17 @@ html {
   background: #242424;
   background: radial-gradient(590px at 8.2% 13.8%, rgb(18, 35, 60) 0%, rgb(187, 187, 187) 90%); 
   color: white;
+  min-width: 800px;
+  height: 600px;
+  overflow: hidden;
+  position: relative;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 #title {font-size: 1.2rem; font-weight: bold;}
 #url-div {float: right}
 .float-right {float: right}
@@ -11,11 +21,14 @@ html {
 
 label {font-size: 1.1rem;}
 textarea {
+  margin-top: 8px;
   font-family: monospace;
   background: black;
   /* background: red; */
   color: white;
   resize: none;
+  width: 100%;
+  height: 400px;
 }
 button {
   padding: 2px 4px;
@@ -25,10 +38,35 @@ button {
   cursor: pointer;
   box-shadow: none;
 }
+button.active {
+  border: none;
+  border-bottom: 2px solid blue;
+  background: #/*242424;
+  color: white;*/
+}
 
 .w-100 {width: 100%;}
 .w-50 {width: 50%;}
 
+.hidden { display: none;}
 .active {
   border-bottom: 3px;
+}
+.collapsed {
+  opacity: 0.7;
+}
+
+.float-right { float: right}
+.accordion-header {
+/*   background: red; */
+  cursor: pointer;
+  boder: 2px solid #242424;
+  border-radius: 4px;
+
+}
+
+
+#save-btn {
+  position: absolute;
+  bottom: 4px;;
 }
