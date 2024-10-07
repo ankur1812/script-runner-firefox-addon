@@ -5,12 +5,12 @@ function addCSS(css) {
     cssSheet.setAttribute('id', CSS_KEY);
     cssSheet.innerText =  css;
     document.body.appendChild(cssSheet);
-    console.log('*** INJECT: CSS Added ***')
+    // console.log('*** INJECT: CSS Added ***')
 }
 let url = location.href.toString().replace('https://', '').replace('http://', '').split('/')[0];
 let gettingItem = browser.storage.local.get(url);
 gettingItem.then((data) => {
-    console.log("FOUND",  JSON.stringify(data));
+    // console.log("FOUND local",  JSON.stringify(data));
     let info = data[url]
     if(info.cssEnabled && info.css) {
         addCSS(info.css.replaceAll("\"", ""));
@@ -24,7 +24,7 @@ gettingItem.then((data) => {
 
 let gettingItemGlobal = browser.storage.local.get('globalCode');
 gettingItemGlobal.then((data) => {
-    console.log("FOUND",  JSON.stringify(data));
+    // console.log("FOUND global",  JSON.stringify(data));
     let info = data.globalCode;
     if(info.cssGlobalEnabled && info.cssGlobal) {
         addCSS(info.cssGlobal.replaceAll("\"", ""));

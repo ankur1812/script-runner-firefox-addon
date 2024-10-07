@@ -5,17 +5,20 @@
   </head>
   <body>
     <div class="main-header">
-      <div id="url-div"></div>
-      <div id="title">Script Runner</div>
+      <span id="options-page" class="cursor-pointer float-right">&#9881;</span>
+      <div id="title">
+        Script Runner
+      </div>
     </div>
     <hr/>
     <!-- <a id="global-action" class="float-rightw">Configure Global Scripts</a> -->
-    <div class="flex view-btns hidden">
+    <div class="flex view-btns">
       <button id="show-local" class="active w-50">Scripts for this site</button>
 
       <button id="show-global" class="w-50">Global scripts</button>
 
     </div>
+    <div id="url-div"></div>
 
     <div id="local-scripts">
       <div class="css-container">
@@ -39,7 +42,7 @@
       </div>
     </div>
 
-    <div id="global-scripts" style="display:none">
+    <div id="global-scripts" style="display:none">>
 <!--      <input type="checkbox" checked="true" id="enable-css-global">
       <label>Global CSS</label><br>
       <textarea id="css-box-global" placeholder="Add Global CSS styles here" cols="40" rows="6"></textarea>

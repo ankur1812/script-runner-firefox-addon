@@ -3,6 +3,29 @@ const dqsA = (s) => Array.from(document.querySelectorAll(s));
 const ael = (s, e, fn, z=false) => dqs(s).addEventListener(e, fn, z)
 const config = {url: ''};
 
+const toggleAccordion = (containerDivClass) => {
+    let isHidden = dqs(`.${containerDivClass} textarea`)?.classList.contains('hidden');
+    dqs(`.${containerDivClass} textarea`)?.classList.toggle('hidden');
+    if (dqs(`.${containerDivClass} .chevron`)) {
+        dqs(`.${containerDivClass} .chevron`).classList.toggle('collapsed', !isHidden)
+    }
+
+    dqsA('#local-scripts textarea').forEach( ta => {
+        let parentClass = ta.parentElement.className
+        let currentDiv = parentClass == containerDivClass;
+        if(!currentDiv){
+            ta.classList.toggle('hidden', true)
+            dqs(`.${parentClass} .chevron`)?.classList.toggle('collapsed', true)
+        }
+    });
+}
+
+const toggleView = (a,b) => {
+    dqs('#local-scripts').style.display = a
+    dqs('#global-scripts').style.display = b
+    dqs('#show-local').classList.toggle('active', a == 'block')
+    dqs('#show-global').classList.toggle('active', b == 'block')
+}
 
 const injectNow = () => {
     const injectCode = {
@@ -29,23 +52,6 @@ const injectNow = () => {
 
 dqs('#save-btn').addEventListener('click', injectNow)
 
-const toggleAccordion = (containerDivClass) => {
-    let isHidden = dqs(`.${containerDivClass} textarea`)?.classList.contains('hidden');
-    dqs(`.${containerDivClass} textarea`)?.classList.toggle('hidden');
-    if (dqs(`.${containerDivClass} .chevron`)) {
-        dqs(`.${containerDivClass} .chevron`).classList.toggle('collapsed', !isHidden)
-    }
-
-
-    dqsA('#local-scripts textarea').forEach( ta => {
-        let parentClass = ta.parentElement.className
-        let currentDiv = parentClass == containerDivClass;
-        if(!currentDiv){
-            ta.classList.toggle('hidden', true)
-            dqs(`.${parentClass} .chevron`)?.classList.toggle('collapsed', true)
-        }
-    });
-}
 
 dqsA('.accordion-header').forEach ( h => {
     h.addEventListener('click', (e) => e.target.tagName != 'INPUT' && toggleAccordion(h.parentElement.className))
@@ -57,26 +63,34 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
     config.url = url
     dqs("#url-div").innerHTML = url;
 
-    function toggleView(a,b) {
-        dqs('#local-scripts').style.display = a
-        dqs('#global-scripts').style.display = b
-        dqs('#show-local').classList.toggle('active', a == 'block')
-        dqs('#show-global').classList.toggle('active', b == 'block')
-    }
-
     ael('#show-local','click', (e)=>{toggleView('block', 'none')});
     ael('#show-global','click', (e)=>{toggleView('none', 'block')});
+    ael('#options-page','click', (e)=> browser.runtime.openOptionsPage());
 
-
-    let gettingItem = browser.storage.local.get(url);
-    gettingItem.then( (res) => {
+    const renderScriptsData = (res) => {
         dqs('textarea#css-box').value = (res[url]?.css) || "";
         dqs('textarea#js-box').value = (res[url]?.js) || "";
         dqs('#enable-css').checked = (res[url]?.cssEnabled) || "";
         dqs('#enable-js').checked = (res[url]?.jsEnabled) || "";
-    }, (err) => {
+    }
+
+
+
+    function getKeyData (key) {
+        return browser.storage.local.get(key);
+    }
+
+
+    let gettingItem = browser.storage.local.get(url);
+    gettingItem.then( renderScriptsData, (err) => {
         dqs('#success-msg').value = JSON.stringify(err);
     });
+
+
+    getKeyData('global-scripts-names').then( function(res) {
+        dqs("#global-scripts").innerText = res['global-scripts-names'].join('\n')
+    })
+
 
     // let gettingItemGlobal = browser.storage.local.get("globalCode");
     // gettingItemGlobal.then( (res) => {
