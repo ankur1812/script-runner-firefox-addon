@@ -105,7 +105,7 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
                   </div>
               `
             })
-            dqs("#global-scripts").innerHTML = checkboxes.join('\n')
+            dqs("#global-scripts #items").innerHTML = checkboxes.join('\n')
         })
 
 

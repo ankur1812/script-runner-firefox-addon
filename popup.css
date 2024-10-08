@@ -1,7 +1,8 @@
 html {
   font-family: SFProText-Medium;
-  background: #242424;
-  background: radial-gradient(590px at 8.2% 13.8%, rgb(18, 35, 60) 0%, rgb(187, 187, 187) 90%); 
+  background: #373f51;
+  background: #0A2463;
+  /*background: radial-gradient(590px at 8.2% 13.8%, rgb(18, 35, 60) 0%, rgb(187, 187, 187) 90%); */
   color: white;
   min-width: 800px;
   height: 600px;
@@ -10,40 +11,64 @@ html {
 }
 
 body {
+/*  padding: 0;
+  margin: 0;*/
   display: flex;
   flex-direction: column;
 }
 
-#title {font-size: 1.2rem; font-weight: bold;}
-#url-div {margin: 8px 0;}
+a { color: white; text-decoration: none; }
+
+a:hover { text-decoration: underline; }
+
+#title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 12px 0px 0px 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+#url-div {margin: 8px 0; text-decoration: underline;}
 .float-right {float: right}
 .flex {display: flex}
 
-label {font-size: 1.1rem;}
+label {font-size: 1.1rem; cursor: pointer; text-transform: capitalize;}
 textarea {
-  margin-top: 8px;
+  margin: 12px 8px 0px 0px;
+  padding: 12px;
   font-family: monospace;
-  background: black;
-  /* background: red; */
+  background: #242424;
+   /*background: #A33339; */
   color: white;
   resize: none;
-  width: 100%;
-  height: 350px;
+  width: 95%;
+  height: 320px;
 }
 button {
-  padding: 2px 4px;
-  margin: 2px;
-  background: white;
+  padding: 8px 4px;
+  margin: 0px;
+  background: inherit;
+  font-weight: 400;
+  background: #0A1C47; 
   border-radius: 0px;
   cursor: pointer;
-  box-shadow: none;
+  box-shadow: none
+  border: 1px solid #242424;
+  color: white;
+}
+button:hover {
+  opacity: 0.9;
 }
 button.active {
-  border: none;
-  border-bottom: 2px solid blue;
-  background: #/*242424;
-  color: white;*/
+  /*border: none;*/
+  border-bottom: 1px solid transparent;
+  /*background: blue;*/
+  color: white;
 }
+
 
 .w-100 {width: 100%;}
 .w-50 {width: 50%;}
@@ -60,7 +85,7 @@ button.active {
 .accordion-header {
 /*   background: red; */
   cursor: pointer;
-  boder: 2px solid #242424;
+  boder: 2px solid rgb(55, 63, 81);
   border-radius: 4px;
 
 }
@@ -71,7 +96,9 @@ button.active {
 
 #save-btn {
   position: absolute;
-  bottom: 4px;;
+  bottom: 8px;
+  color: white;
+  width: calc(100% - 20px)
 }
 
 

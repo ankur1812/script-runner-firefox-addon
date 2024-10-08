@@ -5,22 +5,20 @@
   </head>
   <body>
     <div class="main-header">
-      <span id="options-page" class="cursor-pointer float-right">&#9881;</span>
+      <div class="float-right"><br/><span id="url-div"> </span> &nbsp;</div>
       <div id="title">
+        <img width="32" src="images/ico48.png"/>
         Script Runner
       </div>
     </div>
     <hr/>
     <!-- <a id="global-action" class="float-rightw">Configure Global Scripts</a> -->
     <div class="flex view-btns">
-      <button id="show-local" class="active w-50">Scripts for this site</button>
-
-      <button id="show-global" class="w-50">Global scripts</button>
-
+      <button id="show-local" class="active w-50">SCRIPTS FOR THIS SITE</button>
+      <button id="show-global" class="w-50">GLOBAL SCRIPTS</button>
     </div>
-    <div id="url-div"></div>
-
     <div id="local-scripts">
+      <br/>
       <div class="css-container">
         <div class="accordion-header">
           <span class="chevron collapsed"> &#x276F;</span>
@@ -28,9 +26,8 @@
           <label>CSS</label>
         </div>
         <textarea id="css-box" class="hidden" placeholder="Add CSS styles here" rows="20"></textarea>
-        <hr/>
       </div>
-      <br>
+      <br/>
       <div class="js-container">
         <div class="accordion-header">
           <span class="chevron"> &#x276F;</span>
@@ -38,11 +35,17 @@
           <label>JavaScript</label>
         </div>
         <textarea id="js-box" placeholder="Add JS here" rows="20"></textarea>
-        <hr/>
       </div>
     </div>
 
-    <div id="global-scripts" style="display:none">>
+
+    <div id="global-scripts" style="display:none">
+      <br>
+      <a href="#" id="options-page" class="cursor-pointer float-right"> Edit global scripts &nbsp;</a>
+
+
+      <div id="items"></div>
+
 <!--      <input type="checkbox" checked="true" id="enable-css-global">
       <label>Global CSS</label><br>
       <textarea id="css-box-global" placeholder="Add Global CSS styles here" cols="40" rows="6"></textarea>
@@ -53,7 +56,7 @@
     </div>
     <div id="success-msg"></div>
 
-    <button id="save-btn" class="w-100">Save</button>
+    <button id="save-btn" class="w-100">SAVE</button>
   </body>
 </html>
 <script src="popup.js"></script>  
