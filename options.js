@@ -23,6 +23,7 @@ let globalScriptsKeyList = [];
 
 function saveScript (name, js, css, isNew) {
     if(isNew) name = document.querySelector('#new-script-name').value;
+    if(!name) return;
     let scriptName = encodeKey(name);
 
     browser.storage.local.set({
@@ -53,11 +54,10 @@ function renderScriptsList(querySelector, scripts) {
         const header = document.createElement('div');
         header.classList.add('accordion-header'); // Apply CSS class
         header.innerHTML = `
-        <div class="space-between">
-            <div>${script.blankTemplate ? '<input disabled id="new-script-name" placeholder="Name" />' : script.name}</div>
+        <div class="${script.blankTemplate ? 'justify-center' : 'space-between'}">
+                ${script.blankTemplate ? '' : ('<div><span class="collapsed">&#x276F;&nbsp;</span>' + script.name + '</div>')}
             <div class="actions">
-                <span class="edit float-right">${script.blankTemplate ? 'Add New' : 'Edit'}</span>
-                ${script.blankTemplate ? '' : '<span class="delete float-right">Delete</span>'}
+                ${script.blankTemplate ? '<span>&#43; Add New</span>' : '<span title="Edit" class="edit ico float-right">&#9998;&nbsp;</span>&nbsp;<span title="Delete"class="delete ico float-right">&#128465;&nbsp;</span>'}
             </div>
         </div>
         `
@@ -66,16 +66,20 @@ function renderScriptsList(querySelector, scripts) {
         content.classList.add('accordion-content');
 
         const jsTitle = document.createElement('label');
-        jsTitle.innerText = 'JS Code'
+        jsTitle.innerHTML = '&nbsp;JavaScript:'
+
+        const inputBox = document.createElement('div');
+        inputBox.innerHTML = '<label>Enter Name</label><br/><input disabled id="new-script-name" placeholder="Enter script name"/><br/><br/>';
 
         const jsCodeTextarea = document.createElement('textarea');
         jsCodeTextarea.value = script.js;
         jsCodeTextarea.disabled = true;
         jsCodeTextarea.classList.add('code-textarea');
+        jsCodeTextarea.classList.add('code-textarea-js');
         jsCodeTextarea.placeholder = 'JavaScript Code';
 
         const cssTitle = document.createElement('label');
-        cssTitle.innerText = 'CSS Code'
+        cssTitle.innerHTML = '&nbsp;CSS:'
 
 
         const cssCodeTextarea = document.createElement('textarea');
@@ -91,6 +95,7 @@ function renderScriptsList(querySelector, scripts) {
         saveBtn.innerText = 'Save';
 
         saveBtn.addEventListener('click', () => {
+            if (script.blankTemplate && !document.querySelector('#new-script-name')?.value) return;
             saveScript(script.name, jsCodeTextarea.value, cssCodeTextarea.value, script.blankTemplate);
             jsCodeTextarea.disabled = true;
             cssCodeTextarea.disabled = true;
@@ -99,11 +104,13 @@ function renderScriptsList(querySelector, scripts) {
             if(script.blankTemplate){
                 jsCodeTextarea.value = '';
                 cssCodeTextarea.value = '';
+                document.querySelector('#new-script-name').value = ''
                 document.querySelector('#new-script-name').disabled = true;
             }
         })
 
 
+        script.blankTemplate && content.appendChild(inputBox);
         content.appendChild(jsTitle);
         content.appendChild(jsCodeTextarea);
         content.appendChild(document.createElement('br'));
@@ -112,14 +119,14 @@ function renderScriptsList(querySelector, scripts) {
         content.appendChild(saveBtn)
 
         header.addEventListener('click', (e) => {
-            let expand = false;
-            if (e.target.classList.contains('edit')) {
+            let expand = content.style.display !== 'block';
+            if (e.target.classList.contains('edit') || script.blankTemplate) {
                 if (script.blankTemplate) {
                     let nameInput = document.querySelector('#new-script-name');
                     nameInput.disabled = false;
                     nameInput.focus();
                 }
-                expand = true;
+                if (e.target.classList.contains('edit')) expand = true;
                 jsCodeTextarea.disabled = false;
                 !script.blankTemplate && jsCodeTextarea.focus();
                 cssCodeTextarea.disabled = false;
@@ -132,7 +139,7 @@ function renderScriptsList(querySelector, scripts) {
                 return;
             }
 
-            content.style.display = (expand || content.style.display !== 'block') ? 'block' : 'none';
+            content.style.display = expand ? 'block' : 'none';
         });
 
         li.appendChild(header);
@@ -150,8 +157,13 @@ getKeyData(LIST_KEY_GLOBAL).then( (res) => {
     console.log('globalScriptsKeyList', globalScriptsKeyList)
     let promises = []
     res[LIST_KEY_GLOBAL]?.forEach( key => {
-        promises.push(getKeyData(key));
+        key && promises.push(getKeyData(key));
     })
+    if(promises.length == 0){
+        renderScriptsList('#scripts-list', [{name: '', js: '', css: '', blankTemplate: true}])
+        return;
+    }
+
     Promise.allSettled(promises).then( res2 => {
         res2.forEach( resp => {
             let keys = Object.keys(resp.value);
@@ -164,11 +176,6 @@ getKeyData(LIST_KEY_GLOBAL).then( (res) => {
         scripts.unshift({name: '', js: '', css: '', blankTemplate: true})
         renderScriptsList('#scripts-list', scripts)
     })
-    if(promises.length == 0){
-        renderScriptsList('#scripts-list', [{name: '', js: '', css: '', blankTemplate: true}])
-
-    }
-
 })
 
 

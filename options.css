@@ -1,8 +1,10 @@
 html, body {
-    background: #242424;
-    color: white;
     padding: 1rem 4rem;
+    overflow: auto !important;
 }
+
+
+a { color: white; text-decoration: none; }
 
 ul {
     list-style-type: none;
@@ -20,12 +22,15 @@ li {
     padding: 10px;
     border-bottom: 1px solid #ccc;
     font-weight: bold;
-/*     background-color: #f9f9f9; */
     transition: background-color 0.3s;
 }
 
 .accordion-header:hover {
 /*     background-color: #e0e0e0; */
+}
+
+.accordion-header div {
+    text-transform: capitalize;
 }
 
 .accordion-content {
@@ -35,31 +40,37 @@ li {
 
 /* Styling for the textareas */
 textarea, .code-textarea {
-    width: 100%;
-    height: 150px;
+    min-height: 100px;
     color: white;
-    background: black;
     margin: 10px 0px;
-    resize: none; /* Prevent resizing */
-    font-family: monospace; /* Use monospace font for code */
+}
+
+textarea, .code-textarea-js {
+    min-height: 240px;
+    color: white;
+    margin: 10px 0px;
 }
 
 textarea.code-textarea[disabled] {
     background: transparent;
     border: none;
     border-bottom: 1px solid white;
-};
+}
 
-input#new-script-name {
-    background: black;
+input {
+    background: #242424;
     color: white;
-    width: 250px;
     height: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    width: calc(100% - 30px)
 }
 
 input[disabled] {
     display: none;
 }
+
+input:focus {outline: none;}
 
 
 br {
@@ -69,6 +80,15 @@ br {
 .space-between {
     display: flex;
     justify-content: space-between;
+}
+
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.ico:hover {
+    opacity: .7;
 }
 
 
