@@ -12,6 +12,7 @@ let gettingItem = browser.storage.local.get(url);
 gettingItem.then((data) => {
     // console.log("FOUND local",  JSON.stringify(data));
     let info = data[url]
+    debugger;
     if(info.cssEnabled && info.css) {
         addCSS(info.css.replaceAll("\"", ""));
     }
@@ -19,22 +20,36 @@ gettingItem.then((data) => {
         try { eval(info.js)}
         catch (err) {console.log(JSON.stringify(err))}        
     }
+    if(info.globalScripts?.length > 0) 
+        info.globalScripts.forEach( k => {
+            browser.storage.local.get(k).then( res => {
+                debugger;
+                let globalScriptItem = res[k];
+                addCSS(globalScriptItem.css.replaceAll("\"", ""));
+                if (globalScriptItem.js){
+                    try { eval(globalScriptItem.js)}
+                    catch (err) {console.log(JSON.stringify(err))}        
+                }
+            })
+
+        })
     
 }, (err)=> console.log('ERR', JSON.stringify(err)));
 
-let gettingItemGlobal = browser.storage.local.get('globalCode');
-gettingItemGlobal.then((data) => {
-    // console.log("FOUND global",  JSON.stringify(data));
-    let info = data.globalCode;
-    if(info.cssGlobalEnabled && info.cssGlobal) {
-        addCSS(info.cssGlobal.replaceAll("\"", ""));
-    }
-    if(info.jsGlobalEnabled && info.jsGlobal) {
-        try { eval(info.jsGlobal)}
-        catch (err) {console.log(JSON.stringify(err))}        
-    }
+// let gettingItemGlobal = browser.storage.local.get('globalCode');
+// gettingItemGlobal.then((data) => {
+//     // console.log("FOUND global",  JSON.stringify(data));
+//     let info = data.globalCode;
+//     if(info.cssGlobalEnabled && info.cssGlobal) {
+//         addCSS(info.cssGlobal.replaceAll("\"", ""));
+//     }
+//     if(info.jsGlobalEnabled && info.jsGlobal) {
+//         try { eval(info.jsGlobal)}
+//         catch (err) {console.log(JSON.stringify(err))}        
+//     }
+//     info.
        
-}, (err)=> console.log('ERR', JSON.stringify(err)));
+// }, (err)=> console.log('ERR', JSON.stringify(err)));
 
 
 

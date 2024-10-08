@@ -34,20 +34,23 @@ const injectNow = () => {
             js: dqs('#js-box').value,
             cssEnabled:dqs('#enable-css').checked,
             jsEnabled: dqs('#enable-js').checked,
+            globalScripts: dqsA('#global-scripts input')?.filter( i => i.checked)?.map(i => i.id)// || ['global_script_opacity']
         }
     }
-    // let globalCode = {
-    //     globalCode: {
-    //         cssGlobal:dqs('#css-box-global').value,
-    //         jsGlobal: dqs('#js-box-global').value,
-    //         cssGlobalEnabled:dqs('#enable-css-global').checked,
-    //         jsGlobalEnabled: dqs('#enable-js-global').checked,
-    //     }
-    // }
 
     browser.storage.local.set(injectCode);
     // browser.storage.local.set(globalCode);
-    dqs('#success-msg').innerHTML =  "JS/CSS added. Refresh to see changes!"
+
+    dqsA('#local-scripts textarea').forEach( ta => {
+        let parentClass = ta.parentElement.className
+        ta.classList.toggle('hidden', true)
+        dqs(`.${parentClass} .chevron`)?.classList.toggle('collapsed', true)
+    });
+
+    setTimeout( () => {
+        dqs('#success-msg').innerHTML =  "JS/CSS added. Refresh to see changes!"
+    }, 500)
+
 }
 
 dqs('#save-btn').addEventListener('click', injectNow)
@@ -68,10 +71,12 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
     ael('#options-page','click', (e)=> browser.runtime.openOptionsPage());
 
     const renderScriptsData = (res) => {
-        dqs('textarea#css-box').value = (res[url]?.css) || "";
-        dqs('textarea#js-box').value = (res[url]?.js) || "";
-        dqs('#enable-css').checked = (res[url]?.cssEnabled) || "";
-        dqs('#enable-js').checked = (res[url]?.jsEnabled) || "";
+        const { js, css, jsEnabled, cssEnabled, globalScripts } = (res[url] || {})
+        dqs('textarea#css-box').value = (css) || "";
+        dqs('textarea#js-box').value = (js) || "";
+        dqs('#enable-css').checked = (cssEnabled != false) || "";
+        dqs('#enable-js').checked = (jsEnabled != false) || "";
+        getGlobalScripts(globalScripts);
     }
 
 
@@ -79,6 +84,9 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
     function getKeyData (key) {
         return browser.storage.local.get(key);
     }
+    function encodeKey (key) { return 'global_script_' + key.replaceAll(' ', '_-_'); }
+    function decodeKey (key) { return key.replace('global_script_', '').replaceAll('_-_', ' '); }
+
 
 
     let gettingItem = browser.storage.local.get(url);
@@ -87,10 +95,21 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
     });
 
 
-    getKeyData('global-scripts-names').then( function(res) {
-        dqs("#global-scripts").innerText = res['global-scripts-names'].join('\n')
-    })
+    const getGlobalScripts = (enableList=[]) => {
+        getKeyData('global-scripts-names').then( function(res) {
+            let checkboxes = res['global-scripts-names'].map( (k) => {
+                return `
+                  <div class="script-item">
+                  <input id="${k}" type="checkbox" ${enableList.includes(k) ? 'checked="true"' : ''} id="enable-css">
+                    <label for="${k}">${decodeKey(k)}</label>
+                  </div>
+              `
+            })
+            dqs("#global-scripts").innerHTML = checkboxes.join('\n')
+        })
 
+
+    }
 
     // let gettingItemGlobal = browser.storage.local.get("globalCode");
     // gettingItemGlobal.then( (res) => {

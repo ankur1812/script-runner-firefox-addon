@@ -164,6 +164,11 @@ getKeyData(LIST_KEY_GLOBAL).then( (res) => {
         scripts.unshift({name: '', js: '', css: '', blankTemplate: true})
         renderScriptsList('#scripts-list', scripts)
     })
+    debugger;
+    if(promises.length == 0){
+        renderScriptsList('#scripts-list', [{name: '', js: '', css: '', blankTemplate: true}])
+
+    }
 
 })
 
