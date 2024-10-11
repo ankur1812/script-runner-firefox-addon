@@ -22,6 +22,7 @@ gettingItem.then((data) => {
     }
     if(info.globalScripts?.length > 0) 
         info.globalScripts.forEach( k => {
+            
             browser.storage.local.get(k).then( res => {
                 debugger;
                 let globalScriptItem = res[k];
@@ -35,22 +36,3 @@ gettingItem.then((data) => {
         })
     
 }, (err)=> console.log('ERR', JSON.stringify(err)));
-
-// let gettingItemGlobal = browser.storage.local.get('globalCode');
-// gettingItemGlobal.then((data) => {
-//     // console.log("FOUND global",  JSON.stringify(data));
-//     let info = data.globalCode;
-//     if(info.cssGlobalEnabled && info.cssGlobal) {
-//         addCSS(info.cssGlobal.replaceAll("\"", ""));
-//     }
-//     if(info.jsGlobalEnabled && info.jsGlobal) {
-//         try { eval(info.jsGlobal)}
-//         catch (err) {console.log(JSON.stringify(err))}        
-//     }
-//     info.
-       
-// }, (err)=> console.log('ERR', JSON.stringify(err)));
-
-
-
-

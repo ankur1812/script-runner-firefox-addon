@@ -1,6 +1,3 @@
-const dqs = (s) => document.querySelector(s);
-const dqsA = (s) => Array.from(document.querySelectorAll(s));
-const ael = (s, e, fn, z=false) => dqs(s).addEventListener(e, fn, z)
 const config = {url: ''};
 
 const toggleAccordion = (containerDivClass) => {
@@ -68,7 +65,10 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
 
     ael('#show-local','click', (e)=>{toggleView('block', 'none')});
     ael('#show-global','click', (e)=>{toggleView('none', 'block')});
-    ael('#options-page','click', (e)=> browser.runtime.openOptionsPage());
+    ael('#options-page','click', (e)=> {
+        browser.runtime.openOptionsPage();
+        window.close();
+    });
 
     const renderScriptsData = (res) => {
         const { js, css, jsEnabled, cssEnabled, globalScripts } = (res[url] || {})
@@ -81,11 +81,11 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
 
 
 
-    function getKeyData (key) {
-        return browser.storage.local.get(key);
-    }
-    function encodeKey (key) { return 'global_script_' + key.replaceAll(' ', '_-_'); }
-    function decodeKey (key) { return key.replace('global_script_', '').replaceAll('_-_', ' '); }
+    // function getKeyData (key) {
+    //     return browser.storage.local.get(key);
+    // }
+    // function encodeKey (key) { return 'global_script_' + key.replaceAll(' ', '_-_'); }
+    // function decodeKey (key) { return key.replace('global_script_', '').replaceAll('_-_', ' '); }
 
 
 
@@ -96,8 +96,8 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
 
 
     const getGlobalScripts = (enableList=[]) => {
-        getKeyData('global-scripts-names').then( function(res) {
-            let checkboxes = res['global-scripts-names'].map( (k) => {
+        getKeyData(LIST_KEY_GLOBAL).then( function(res) {
+            let checkboxes = (res[LIST_KEY_GLOBAL] || []).map( (k) => {
                 return `
                   <div class="script-item">
                   <input id="${k}" type="checkbox" ${enableList.includes(k) ? 'checked="true"' : ''} id="enable-css">
@@ -105,7 +105,11 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
                   </div>
               `
             })
-            dqs("#global-scripts #items").innerHTML = checkboxes.join('\n')
+            if (checkboxes.length == 0) checkboxes.push(`
+                <br/>
+                <span> &#9432; Currently no global scripts are added. </span>
+            `)
+            dqs("#global-scripts #items").innerHTML = checkboxes.join('')
         })
 
 

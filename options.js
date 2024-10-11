@@ -1,4 +1,5 @@
-const LIST_KEY_GLOBAL = 'global-scripts-names';
+// const LIST_KEY_GLOBAL = 'global-scripts-names';
+
 
 function deleteItem (el, name) {
     let key = encodeKey(name);
@@ -10,39 +11,6 @@ function deleteItem (el, name) {
         el?.parentElement?.removeChild(el);
     });
 }
-
-function getKeyData (key) {
-    return browser.storage.local.get(key);
-}
-
-function encodeKey (key) { return 'global_script_' + key.replaceAll(' ', '_-_'); }
-function decodeKey (key) { return key.replace('global_script_', '').replaceAll('_-_', ' '); }
-
-
-let globalScriptsKeyList = [];
-
-function saveScript (name, js, css, isNew) {
-    if(isNew) name = document.querySelector('#new-script-name').value;
-    if(!name) return;
-    let scriptName = encodeKey(name);
-
-    browser.storage.local.set({
-        [scriptName]: {
-            css,
-            js
-        }
-    });
-    if (isNew) {
-        globalScriptsKeyList.push(scriptName);
-        browser.storage.local.set({
-            [LIST_KEY_GLOBAL]: globalScriptsKeyList
-        })
-        setTimeout( () => {
-            renderScriptsList('#scripts-list', [{ name, js, css}])
-        }, 1000)
-    }
-}
-
 
 function renderScriptsList(querySelector, scripts) {
     const container = document.querySelector(querySelector);
@@ -151,7 +119,9 @@ function renderScriptsList(querySelector, scripts) {
         container.appendChild(ul);
 }
 
+
 getKeyData(LIST_KEY_GLOBAL).then( (res) => {
+    debugger;
     globalScriptsKeyList = res[LIST_KEY_GLOBAL] || [];
     let scripts = [];
     console.log('globalScriptsKeyList', globalScriptsKeyList)
