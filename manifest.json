@@ -1,6 +1,6 @@
 {
   "name": "Code Injector",
-  "version": "1.1",
+  "version": "2",
   "description": "Script injector for JavaScript and CSS!",
   "permissions": ["storage", "activeTab", "scripting"],
   "background": {
