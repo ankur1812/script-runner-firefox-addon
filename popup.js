@@ -44,14 +44,7 @@ const injectNow = () => {
         dqs(`.${parentClass} .chevron`)?.classList.toggle('collapsed', true)
     });
 
-    const toaster = dqs('#success-msg');
-    toaster.innerHTML =  "JS/CSS added. Refresh to see changes!"
-    toaster.classList.toggle('notification', true);
-    setTimeout( () => {
-        toaster.innerHTML = ''
-        toaster.classList.toggle('notification', false);
-    }, 2500)
-
+    notify("Scripts saved. Refresh page to see changes!")
 }
 
 dqs('#save-btn').addEventListener('click', injectNow)

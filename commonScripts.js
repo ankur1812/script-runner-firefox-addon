@@ -5,6 +5,17 @@ const dqs = (s) => document.querySelector(s);
 const dqsA = (s) => Array.from(document.querySelectorAll(s));
 const ael = (s, e, fn, z=false) => dqs(s).addEventListener(e, fn, z)
 
+const notify = (message) => {
+    const toaster = dqs('#success-msg');
+    toaster.innerHTML =  message;
+    toaster.classList.toggle('notification', true);
+    setTimeout( () => {
+        toaster.innerHTML = ''
+        toaster.classList.toggle('notification', false);
+    }, 2500)    
+}
+
+
 const getKeyData = (key) => {
     return browser.storage.local.get(key);
 }

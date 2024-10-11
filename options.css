@@ -1,8 +1,15 @@
 html, body {
     padding: 1rem 4rem;
-    overflow: auto !important;
+    overflow-x: hidden !important;
 }
 
+#title {
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 2rem !important;
+    width: calc(100% + 30px);
+    margin-left: -15px !important;
+    padding-left: 15px;
+}
 
 a { color: white; text-decoration: none; }
 
@@ -32,10 +39,14 @@ li {
 .accordion-header div {
     text-transform: capitalize;
 }
+.accordion-header:hover, .save-btn:hover {
+    background: white;
+    color: #01527F;
+}
 
 .accordion-content {
     display: none;
-    padding: 10px;
+    padding: 20px 10px;
 }
 
 /* Styling for the textareas */
@@ -52,7 +63,7 @@ textarea, .code-textarea-js {
 textarea.code-textarea[disabled] {
     background: transparent;
     border: none;
-    border-bottom: 1px solid white;
+    border-top: 1px solid white;
 }
 
 input {

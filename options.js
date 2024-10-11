@@ -2,6 +2,10 @@
 
 debugger;
 function deleteItem (el, name) {
+    const userConfirmed = confirm(`Are you sure you want to delete the script?\n"${name}"`);
+    if (!userConfirmed) {
+        return;
+    }
     let key = encodeKey(name);
     browser.storage.local.remove(key).then(() => {
         globalScriptsKeyList.splice(globalScriptsKeyList.indexOf(key), 1);
@@ -10,6 +14,7 @@ function deleteItem (el, name) {
         })
         el?.parentElement?.removeChild(el);
     });
+    notify(`"${name}" script has been deleted`)
 }
 
 function renderScriptsList(querySelector, scripts) {
@@ -37,14 +42,14 @@ function renderScriptsList(querySelector, scripts) {
         jsTitle.innerHTML = '&nbsp;JavaScript:'
 
         const inputBox = document.createElement('div');
-        inputBox.innerHTML = '<label>Enter Name</label><br/><input disabled id="new-script-name" placeholder="Enter script name"/><br/><br/>';
+        inputBox.innerHTML = '<label>Enter script name</label><br/><input disabled id="new-script-name" placeholder="Enter script name"/><br/><br/>';
 
         const jsCodeTextarea = document.createElement('textarea');
         jsCodeTextarea.value = script.js;
         jsCodeTextarea.disabled = true;
         jsCodeTextarea.classList.add('code-textarea');
         jsCodeTextarea.classList.add('code-textarea-js');
-        jsCodeTextarea.placeholder = 'JavaScript Code';
+        // jsCodeTextarea.placeholder = '// Enter JavaScript code here';
 
         const cssTitle = document.createElement('label');
         cssTitle.innerHTML = '&nbsp;CSS:'
@@ -54,7 +59,7 @@ function renderScriptsList(querySelector, scripts) {
         cssCodeTextarea.value = script.css;
         cssCodeTextarea.disabled = true;
         cssCodeTextarea.classList.add('code-textarea');
-        cssCodeTextarea.placeholder = 'CSS Code';
+        // cssCodeTextarea.placeholder = '/* Enter CSS stylings here */ ';
 
         const saveBtn = document.createElement('button');
         saveBtn.className = 'save-btn';
@@ -75,14 +80,7 @@ function renderScriptsList(querySelector, scripts) {
                 document.querySelector('#new-script-name').value = ''
                 document.querySelector('#new-script-name').disabled = true;
             }
-            const toaster = dqs('#success-msg');
-            toaster.innerHTML =  "Saved!"
-            toaster.classList.toggle('notification', true);
-            setTimeout( () => {
-                toaster.innerHTML = ''
-                toaster.classList.toggle('notification', false);
-            }, 2500)
-
+            notify("Script saved!")
         })
 
 
@@ -111,7 +109,7 @@ function renderScriptsList(querySelector, scripts) {
 
             }
             else if (e.target.classList.contains('delete')) {
-                deleteItem(li, name)
+                deleteItem(li, script.name)
                 return;
             }
 
