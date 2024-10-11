@@ -7,6 +7,7 @@ html {
   min-width: 800px;
   height: 590px;
   /*overflow: hidden;*/
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -16,6 +17,16 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+#title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 12px 0px 0px 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
 
 label {font-size: 1.1rem; cursor: pointer; text-transform: capitalize;}
 textarea {
@@ -59,4 +70,37 @@ a:hover { text-decoration: underline; }
 
 .collapsed {
   opacity: 0.7;
+}
+
+
+.notification {
+  position: fixed;
+  bottom: 80px;
+  left: 10px;
+  transform: translateY(100%);
+  padding: 10px 20px;
+  background-color: #01527F;
+  border: 1px solid white;
+  color: white;
+  border-radius: 4px;
+  opacity: 0;
+  animation: slideIn 2.5s ease forwards;
+}
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }

@@ -40,15 +40,13 @@ li {
 
 /* Styling for the textareas */
 textarea, .code-textarea {
-    min-height: 100px;
+    min-height: 250px;
     color: white;
     margin: 10px 0px;
 }
 
 textarea, .code-textarea-js {
-    min-height: 240px;
-    color: white;
-    margin: 10px 0px;
+    /*min-height: 240px;*/
 }
 
 textarea.code-textarea[disabled] {
@@ -95,4 +93,8 @@ br {
 .save-btn {
     border-radius: 0px;
     width: 100%;
+}
+
+.notification {
+    left: 8rem !important;
 }

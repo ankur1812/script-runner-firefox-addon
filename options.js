@@ -1,6 +1,6 @@
 // const LIST_KEY_GLOBAL = 'global-scripts-names';
 
-
+debugger;
 function deleteItem (el, name) {
     let key = encodeKey(name);
     browser.storage.local.remove(key).then(() => {
@@ -75,6 +75,14 @@ function renderScriptsList(querySelector, scripts) {
                 document.querySelector('#new-script-name').value = ''
                 document.querySelector('#new-script-name').disabled = true;
             }
+            const toaster = dqs('#success-msg');
+            toaster.innerHTML =  "Saved!"
+            toaster.classList.toggle('notification', true);
+            setTimeout( () => {
+                toaster.innerHTML = ''
+                toaster.classList.toggle('notification', false);
+            }, 2500)
+
         })
 
 
@@ -120,6 +128,7 @@ function renderScriptsList(querySelector, scripts) {
 }
 
 
+debugger;
 getKeyData(LIST_KEY_GLOBAL).then( (res) => {
     debugger;
     globalScriptsKeyList = res[LIST_KEY_GLOBAL] || [];

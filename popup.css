@@ -1,14 +1,4 @@
 
-#title {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin: 12px 0px 0px 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-
 #url-div {margin: 8px 0; text-decoration: underline;}
 .float-right {float: right}
 .flex {display: flex}
@@ -54,6 +44,10 @@ button.active {
   color: white;
   width: calc(100% - 20px);
   border: 1px solid black;
+}
+#save-btn:hover {
+  border: 1px solid white;
+  /*color: #01527F;*/
 }
 
 .scripts-div {
