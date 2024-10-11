@@ -50,7 +50,7 @@ const initializeDefaultScripts = () => {
             name: encodeKey('Dark Theme 1 (Standard)'),
             js: '',
             css: `
-                html, body, header, .header, footer, aside, nav { background: #1f1f1 !important; color: #e0e0e0 !important;}
+                html, body, header, .header, footer, aside, nav { background: #1f1f1f !important; color: #e0e0e0 !important;}
                 *:not(html):not(body):not(header):not(.header):not(footer):not(aside):not(nav):not(input):not(textarea):not(select):not(button) {
                     background: inherit !important; color: inherit !important;
                 }
