@@ -1,8 +1,9 @@
 const config = {url: ''};
 
-const toggleAccordion = (containerDivClass) => {
+const toggleAccordion = (containerDivClass, accHeader) => {
     let isHidden = dqs(`.${containerDivClass} textarea`)?.classList.contains('hidden');
     dqs(`.${containerDivClass} textarea`)?.classList.toggle('hidden');
+    // accHeader.classList.toggle('active', isHidden)
     if (dqs(`.${containerDivClass} .chevron`)) {
         dqs(`.${containerDivClass} .chevron`).classList.toggle('collapsed', !isHidden)
     }
@@ -13,6 +14,7 @@ const toggleAccordion = (containerDivClass) => {
         if(!currentDiv){
             ta.classList.toggle('hidden', true)
             dqs(`.${parentClass} .chevron`)?.classList.toggle('collapsed', true)
+            // dqs(`.${parentClass} .accordion-header`)?.classList.toggle('active', false);
         }
     });
 }
@@ -51,7 +53,7 @@ dqs('#save-btn').addEventListener('click', injectNow)
 
 
 dqsA('.accordion-header').forEach ( h => {
-    h.addEventListener('click', (e) => e.target.tagName != 'INPUT' && toggleAccordion(h.parentElement.className))
+    h.addEventListener('click', (e) => e.target.tagName != 'INPUT' && toggleAccordion(h.parentElement.className, h))
 })
 
 browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {

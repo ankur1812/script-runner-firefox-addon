@@ -26,12 +26,16 @@ button.active {
 
 .float-right { float: right}
 .accordion-header {
-/*   background: red; */
   cursor: pointer;
-  boder: 2px solid rgb(55, 63, 81);
-  border-radius: 4px;
-
+  padding: 4px 2px;
+  /*border-radius: 4px;*/
+  /*border: 1px solid transparent; */
 }
+
+.accordion-header:hover .chevron {
+  opacity: 1 !important;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
