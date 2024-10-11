@@ -1,5 +1,7 @@
 html {
-  font-family: SFProText-Medium;
+  /*font-family: SFProText-Medium;*/
+  font-family: 'Roboto', sans-serif;
+
   background: #373f51;
   background: #01527F;
   /*background: radial-gradient(590px at 8.2% 13.8%, rgb(18, 35, 60) 0%, rgb(187, 187, 187) 90%); */
@@ -39,7 +41,7 @@ textarea {
   color: white;
   resize: vertical;
   width: calc(100% - 28px);
-  min-height: 300px;
+  height: 290px;
 }
 textarea:focus {
   outline: none;
