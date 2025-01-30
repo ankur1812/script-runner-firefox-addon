@@ -9,4 +9,4 @@
 
 <br/>
 
-Download link: <a href="https://addons.mozilla.org/en-US/firefox/addon/script-runner/">https://addons.mozilla.org/en-US/firefox/addon/script-runner </a>
+Download link: <a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/script-runner/">https://addons.mozilla.org/en-US/firefox/addon/script-runner </a>
